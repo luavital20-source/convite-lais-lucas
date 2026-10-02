@@ -573,6 +573,21 @@ section { padding: 80px 24px; max-width: 600px; margin: 0 auto; text-align: cent
 .aviso-desc { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic; color: var(--text-mid); line-height: 1.6; }
 .aviso-desc strong { font-style: normal; font-weight: 600; color: var(--text); }
 
+/* FOTO FINAL */
+.end-photo { position: relative; width: 100%; max-width: 900px; margin: 0 auto; overflow: hidden; }
+.end-photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 48% center; }
+@media (min-width: 700px) { .end-photo img { aspect-ratio: 3 / 2; } }
+.end-photo::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, var(--cream) 0%, rgba(245,240,232,0) 14%, rgba(22,34,44,0) 62%, rgba(22,34,44,0.55) 100%);
+}
+.end-photo-caption {
+  position: absolute; left: 0; right: 0; bottom: 28px; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+}
+.end-photo-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: clamp(30px, 8vw, 44px); color: #fff; line-height: 1.1; text-shadow: 0 2px 14px rgba(0,0,0,0.25); }
+.end-photo-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.9); }
+
 /* FOOTER */
 footer { text-align: center; padding: 40px 24px 110px; border-top: 1.5px solid var(--blue-light); }
 footer .footer-names { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-style: italic; color: var(--blue-dark); display: block; margin-bottom: 8px; font-weight: 500; }
@@ -619,6 +634,7 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
   .gift-btn { padding: 9px 12px; letter-spacing: 1.5px; }
   .rsvp-card { padding: 32px 18px; }
   .music-widget { right: 12px; bottom: 12px; }
+  footer .footer-date { font-size: 10px; letter-spacing: 2.5px; }
 }
 </style>
 </head>
@@ -784,7 +800,7 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
       </div>
 
       <!-- FOTO DO PRÉ-WEDDING
-           Para colocar a foto: salve-a como assets/pre-wedding.jpg (retrato, ~1200px de largura).
+           Foto: assets/pre-wedding.jpg (ensaio no campo).
            Enquanto o arquivo não existir, aparece a ilustração de praia abaixo. -->
       <div class="hero-photo">
         <div class="hero-photo-inner">
@@ -813,7 +829,7 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
               <path d="M140 118 q7 -6 13 0 q6 -6 13 0"/>
             </g>
           </svg>
-          <img src="assets/pre-wedding.jpg" alt="Lais e Lucas" onerror="this.remove()">
+          <img src="assets/pre-wedding.jpg" alt="Lais e Lucas no campo" style="object-position: center 92%;" onerror="this.remove()">
         </div>
         <svg class="hero-photo-branch left" viewBox="0 0 80 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <g id="heroSprig">
@@ -1126,6 +1142,15 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
     </div>
 
   </section>
+
+  <!-- FOTO FINAL (mar) -->
+  <div class="end-photo reveal">
+    <img src="assets/foto-mar.jpg" alt="Lais e Lucas no mar">
+    <div class="end-photo-caption">
+      <span class="end-photo-text">Esperamos por você</span>
+      <span class="end-photo-date">30 · 11 · 2026</span>
+    </div>
+  </div>
 
   <footer>
     <span class="footer-names">Lais &amp; Lucas</span>
