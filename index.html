@@ -444,7 +444,7 @@ section { padding: 80px 24px; max-width: 600px; margin: 0 auto; text-align: cent
 /* MODAL PIX */
 .pix-overlay {
   position: fixed; inset: 0; background: rgba(12,24,36,0.6);
-  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 500;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1000;
   display: flex; align-items: center; justify-content: center; padding: 16px;
   opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
 }
@@ -478,7 +478,30 @@ section { padding: 80px 24px; max-width: 600px; margin: 0 auto; text-align: cent
 .pix-copy.copied { background: var(--olive); }
 .pix-key { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); margin-top: 16px; line-height: 1.8; }
 .pix-key strong { font-family: 'EB Garamond', serif; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--text); font-weight: 500; }
-.pix-card-btn { margin-top: 12px; width: 100%; justify-content: center; }
+.pix-card-btn { width: 100%; justify-content: center; }
+.pix-card-btn[disabled] { opacity: .6; cursor: wait; }
+.pay-divider { display: flex; align-items: center; gap: 12px; margin: 22px 0 16px; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--olive); }
+.pay-divider::before, .pay-divider::after { content: ''; flex: 1; height: 1px; background: var(--olive-light); }
+.card-free { text-align: left; margin-bottom: 12px; }
+.card-free label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-dark); display: block; margin-bottom: 6px; }
+.card-free-input { display: flex; align-items: center; border: 1.5px solid var(--blue-light); background: #fff; }
+.card-free-input span { padding: 0 4px 0 14px; font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--text-light); }
+.card-free-input input { flex: 1; min-width: 0; border: none; outline: none; padding: 11px 14px 11px 4px; font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--text); background: transparent; }
+.card-free-input.error { border-color: #c0392b; animation: shake 0.4s ease; }
+.card-note { font-size: 13px; color: var(--text-light); margin-top: 8px; }
+.card-note.error { color: #a93226; }
+
+/* AVISO DE RETORNO DO PAGAMENTO */
+.pay-toast {
+  position: fixed; left: 50%; top: 20px; transform: translate(-50%, -20px); z-index: 10001;
+  width: min(420px, calc(100vw - 32px)); background: var(--cream); border: 1.5px solid var(--blue-light);
+  box-shadow: 0 12px 36px rgba(22,34,44,0.25); padding: 22px 44px 22px 22px; text-align: left;
+  opacity: 0; transition: opacity .4s ease, transform .4s ease;
+}
+.pay-toast.show { opacity: 1; transform: translate(-50%, 0); }
+.pay-toast-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 22px; color: var(--blue-dark); display: block; margin-bottom: 4px; }
+.pay-toast-msg { font-size: 15px; color: var(--text-mid); line-height: 1.5; }
+.pay-toast-close { position: absolute; top: 8px; right: 10px; background: none; border: none; font-size: 22px; color: var(--text-light); cursor: pointer; padding: 6px; }
 
 /* RSVP */
 .rsvp-section { padding-bottom: 100px; }
@@ -964,7 +987,7 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
           data-src="https://maps.google.com/maps?q=Casa%20Maraponga%20Buffet%2C%20R.%20Paurilo%20Barroso%2C%20521%20-%20Jardim%20Cearense%2C%20Fortaleza%20-%20CE%2C%2060712-122&z=16&output=embed"></iframe>
       </div>
       <div class="local-buttons">
-        <a class="btn-primary" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Casa%20Maraponga%20Buffet%2C%20R.%20Paurilo%20Barroso%2C%20521%20-%20Jardim%20Cearense%2C%20Fortaleza%20-%20CE%2C%2060712-122">Google Maps</a>
+        <a class="btn-primary" target="_blank" rel="noopener" href="https://maps.app.goo.gl/vtP6PKR8otnpxWoNA">Google Maps</a>
         <a class="btn-secondary" target="_blank" rel="noopener" href="https://waze.com/ul?q=R.%20Paurilo%20Barroso%2C%20521%20-%20Jardim%20Cearense%2C%20Fortaleza%20-%20CE&navigate=yes">Waze</a>
       </div>
     </div>
@@ -1162,7 +1185,7 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
 <div class="pix-overlay" id="pixOverlay" onclick="if(event.target===this) closePix()">
   <div class="pix-modal" role="dialog" aria-modal="true" aria-labelledby="pixGiftName">
     <button class="pix-close" onclick="closePix()" aria-label="Fechar">&times;</button>
-    <span class="pix-kicker">Presentear com Pix</span>
+    <span class="pix-kicker">Presentear</span>
     <div class="pix-gift-name" id="pixGiftName"></div>
     <div class="pix-gift-value" id="pixGiftValue"></div>
     <div class="pix-qr" id="pixQr"></div>
@@ -1172,7 +1195,16 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
       <span>Copiar código Pix</span>
     </button>
-    <a class="btn-secondary pix-card-btn" id="pixCardBtn" href="#" target="_blank" rel="noopener" style="display:none;">Pagar com cartão</a>
+    <div class="pay-divider"><span>ou</span></div>
+    <div class="card-free" id="cardFree" style="display:none;">
+      <label for="cardAmount">Valor para o cartão</label>
+      <div class="card-free-input"><span>R$</span><input type="number" id="cardAmount" inputmode="decimal" min="20" max="10000" step="0.01" placeholder="0,00"></div>
+    </div>
+    <button class="btn-secondary pix-card-btn" id="pixCardBtn" onclick="payWithCard()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
+      <span>Pagar com cartão</span>
+    </button>
+    <p class="card-note" id="cardNote">Crédito em até 12x pelo Mercado Pago</p>
     <p class="pix-key">Chave Pix (e-mail)<br><strong id="pixKeyText"></strong></p>
   </div>
 </div>
@@ -1183,6 +1215,7 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
 </audio>
 
 <script src="assets/js/qrcode.js"></script>
+<script src="presentes.js"></script>
 <script>
 /* ── CONFIGURAÇÃO ────────────────────────────────────────────────────
    WHATSAPP: número dos noivos com DDI+DDD, só dígitos (ex.: "5585999999999").
@@ -1190,7 +1223,7 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
    GUEST_LIST: nomes exatamente como os convidados receberão o convite
              (acentos/maiúsculas não importam). Lista vazia = aceita qualquer nome.
 ─────────────────────────────────────────────────────────────────────*/
-var WHATSAPP = "";
+var WHATSAPP = "5585984537058";
 var GUEST_LIST = [
 ];
 
@@ -1200,28 +1233,12 @@ var PIX_NAME = "LAIS KIMBERLY";   // até 25 caracteres, sem acento
 var PIX_CITY = "FORTALEZA";       // até 15 caracteres, sem acento
 
 /* ── LISTA DE PRESENTES ──────────────────────────────────────────────
-   card: link de pagamento com cartão (opcional). Quando preenchido,
-         aparece o botão "Pagar com cartão" no presente.
+   Os presentes ficam em presentes.js (o servidor usa o mesmo arquivo para
+   conferir o preço no pagamento com cartão).
 ─────────────────────────────────────────────────────────────────────*/
-var GIFTS = [
-  { name: "Kit Travesseiro Antialérgico Impermeável",        price: 85,   img: "travesseiros",   card: "" },
-  { name: "Ferro de Passar Roupa a Seco VFA Black+Decker",   price: 119,  img: "ferro",          card: "" },
-  { name: "Jogo de Toalha de Banho Buddemeyer",              price: 155,  img: "toalhas",        card: "" },
-  { name: "Liquidificador 1400 Full Oster Preto",            price: 179,  img: "liquidificador", card: "" },
-  { name: "Jogo de Cama Queen 200 Fios Karsten",             price: 250,  img: "jogo-cama",      card: "" },
-  { name: "Jogo de Jantar 30 Peças Oxford",                  price: 340,  img: "jogo-jantar",    card: "" },
-  { name: "Panela de Pressão Elétrica Electrolux PCE20",     price: 369,  img: "panela-pressao", card: "" },
-  { name: "Air Fryer Mondial Forno Oven",                    price: 459,  img: "air-fryer",      card: "" },
-  { name: "Jogo de Panelas Tramontina Solar em Aço Inox",    price: 569,  img: "jogo-panelas",   card: "" },
-  { name: "Purificador de Água FR600",                       price: 639,  img: "purificador",    card: "" },
-  { name: "Fogão Consul CFO4NAR 4 Bocas Inox",               price: 899,  img: "fogao",          card: "" },
-  { name: "Máquina de Lavar 9kg Brastemp",                   price: 1199, img: "maquina-lavar",  card: "" }
-];
-var VOUCHERS = [
-  { name: "Vale-presente", price: 200, card: "" },
-  { name: "Vale-presente", price: 300, card: "" },
-  { name: "Vale-presente", price: 400, card: "" }
-];
+var GIFTS = PRESENTES.gifts;
+var VOUCHERS = PRESENTES.vouchers;
+var currentGift = null;
 
 function brl(v) { return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 function esc(s) { return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -1229,7 +1246,7 @@ function esc(s) { return String(s).replace(/[&<>"]/g, function(c){ return {'&':'
 function renderGifts() {
   document.getElementById('giftGrid').innerHTML = GIFTS.map(function(g, i) {
     return '<div class="gift-card">' +
-      '<img class="gift-photo" src="assets/presentes/' + g.img + '.jpg" alt="' + esc(g.name) + '">' +
+      '<img class="gift-photo" src="assets/presentes/' + g.id + '.jpg" alt="' + esc(g.name) + '">' +
       '<div class="gift-name">' + esc(g.name) + '</div>' +
       '<div class="gift-price">' + brl(g.price) + '</div>' +
       '<button class="gift-btn" onclick="openPix(GIFTS[' + i + '])">Presentear</button>' +
@@ -1271,13 +1288,69 @@ function openPix(gift) {
   document.getElementById('pixKeyText').textContent = PIX_KEY;
   var qr = qrcode(0, 'M'); qr.addData(code); qr.make();
   document.getElementById('pixQr').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
-  var cardBtn = document.getElementById('pixCardBtn');
-  if (gift && gift.card) { cardBtn.href = gift.card; cardBtn.style.display = 'flex'; } else { cardBtn.style.display = 'none'; }
+  currentGift = gift;
+  document.getElementById('cardFree').style.display = gift ? 'none' : 'block';
+  document.getElementById('cardAmount').value = '';
+  setCardState(false, 'Crédito em até 12x pelo Mercado Pago');
   var btn = document.getElementById('pixCopyBtn');
   btn.classList.remove('copied'); btn.querySelector('span').textContent = 'Copiar código Pix';
   document.getElementById('pixOverlay').classList.add('open');
 }
 function closePix() { document.getElementById('pixOverlay').classList.remove('open'); }
+
+/* ── CARTÃO (Mercado Pago Checkout Pro via /api/checkout) ───────────*/
+function setCardState(loading, note, isError) {
+  var btn = document.getElementById('pixCardBtn'), n = document.getElementById('cardNote');
+  btn.disabled = loading;
+  btn.querySelector('span').textContent = loading ? 'Abrindo Mercado Pago…' : 'Pagar com cartão';
+  n.textContent = note; n.classList.toggle('error', !!isError);
+}
+function payWithCard() {
+  var payload;
+  if (currentGift) {
+    payload = { id: currentGift.id };
+  } else {
+    var input = document.getElementById('cardAmount');
+    var amount = parseFloat(String(input.value).replace(',', '.'));
+    if (!(amount >= PRESENTES.free.min && amount <= PRESENTES.free.max)) {
+      var wrap = input.parentNode; wrap.classList.remove('error'); void wrap.offsetWidth; wrap.classList.add('error');
+      setCardState(false, 'Digite um valor entre ' + brl(PRESENTES.free.min) + ' e ' + brl(PRESENTES.free.max) + '.', true);
+      return;
+    }
+    payload = { id: PRESENTES.free.id, amount: amount };
+  }
+  setCardState(true, 'Você será levado ao ambiente seguro do Mercado Pago.');
+  fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(function(r) { return r.json().catch(function() { return {}; }).then(function(d) { return { ok: r.ok, data: d }; }); })
+    .then(function(res) {
+      if (res.ok && res.data.url) { window.location.href = res.data.url; return; }
+      setCardState(false, res.data.error || 'Não foi possível abrir o pagamento. Tente novamente ou use o Pix.', true);
+    })
+    .catch(function() { setCardState(false, 'Sem conexão com o pagamento. Tente novamente ou use o Pix.', true); });
+}
+
+/* Aviso ao voltar do Mercado Pago (?pagamento=aprovado|pendente|falhou) */
+(function showPaymentReturn() {
+  var m = /[?&]pagamento=([a-z]+)/.exec(window.location.search);
+  if (!m) return;
+  var msgs = {
+    aprovado: ['Muito obrigado! 🤍', 'Seu presente foi confirmado. Ficamos muito felizes com o seu carinho.'],
+    pendente: ['Pagamento em análise', 'O Mercado Pago está processando o seu pagamento. Assim que for aprovado, nós recebemos.'],
+    falhou:   ['Pagamento não concluído', 'O pagamento não foi finalizado. Você pode tentar de novo ou presentear pelo Pix.']
+  };
+  var msg = msgs[m[1]]; if (!msg) return;
+  if (window.history && history.replaceState) history.replaceState(null, '', window.location.pathname + window.location.hash);
+  var el = document.createElement('div');
+  el.className = 'pay-toast'; el.setAttribute('role', 'status');
+  el.innerHTML = '<button class="pay-toast-close" aria-label="Fechar">&times;</button><span class="pay-toast-title"></span><span class="pay-toast-msg"></span>';
+  el.querySelector('.pay-toast-title').textContent = msg[0];
+  el.querySelector('.pay-toast-msg').textContent = msg[1];
+  function hide() { el.classList.remove('show'); setTimeout(function() { el.remove(); }, 400); }
+  el.querySelector('.pay-toast-close').onclick = hide;
+  document.body.appendChild(el);
+  setTimeout(function() { el.classList.add('show'); }, 50);
+  setTimeout(hide, 9000);
+})();
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePix(); });
 function copyPix() {
   var ta = document.getElementById('pixCode'), btn = document.getElementById('pixCopyBtn');
