@@ -29,7 +29,7 @@ já com o valor de cada presente, a partir da chave `laiskimberlybp@gmail.com`. 
 
 ## Cartão — Mercado Pago (Checkout Pro)
 
-O botão "Pagar com cartão" chama a função `api/checkout.js`, que cria o pagamento no Mercado Pago
+Cada presente tem dois botões: "Pix" (abre o QR Code e o Copia e Cola) e "Cartão", que chama a função `api/checkout.js`, que cria o pagamento no Mercado Pago
 e leva o convidado para a página segura deles (crédito em até 12x). O preço é conferido no servidor
 a partir de `presentes.js`, então ninguém consegue mudar o valor pelo navegador.
 

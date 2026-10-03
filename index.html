@@ -409,7 +409,7 @@ section { padding: 80px 24px; max-width: 600px; margin: 0 auto; text-align: cent
 }
 .gift-voucher-script { font-family: 'Great Vibes', cursive; font-size: clamp(20px, 5.4vw, 28px); color: var(--blue-dark); line-height: .95; position: relative; }
 .gift-voucher-value { font-family: 'Cinzel', serif; font-size: clamp(13px, 3.6vw, 18px); letter-spacing: 1px; color: var(--olive); font-weight: 500; position: relative; }
-.voucher-grid .gift-btn { padding: 9px 8px; letter-spacing: 1px; width: 100%; max-width: 140px; }
+.voucher-grid .gift-btn { padding: 9px 4px; letter-spacing: 1px; }
 .gift-name {
   font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 500;
   color: var(--text); line-height: 1.3; flex: 1; padding: 0 4px;
@@ -427,6 +427,12 @@ section { padding: 80px 24px; max-width: 600px; margin: 0 auto; text-align: cent
   transition: all 0.3s ease; cursor: pointer;
 }
 .gift-btn:hover { background: var(--blue-dark); border-color: var(--blue-dark); color: white; }
+.gift-btn.pix { background: var(--blue-dark); border-color: var(--blue-dark); color: #fff; }
+.gift-btn.pix:hover { background: var(--text); border-color: var(--text); }
+.gift-btn[disabled] { opacity: .6; cursor: wait; }
+.gift-actions { display: flex; flex-direction: column; gap: 8px; }
+.gift-actions .gift-btn { width: 100%; }
+.gift-pay-note { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--olive); margin: -14px 0 26px; line-height: 1.7; }
 .gift-subtitle {
   font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
   color: var(--olive); margin: 40px 0 18px; display: flex; align-items: center; gap: 14px;
@@ -440,6 +446,10 @@ section { padding: 80px 24px; max-width: 600px; margin: 0 auto; text-align: cent
   border: 1px solid rgba(107,117,66,0.25); pointer-events: none;
 }
 .gift-free p { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: var(--text-mid); line-height: 1.6; margin-bottom: 16px; }
+.gift-free .card-free-input { max-width: 260px; margin: 0 auto 12px; }
+.gift-free .gift-actions { flex-direction: row; justify-content: center; max-width: 260px; margin: 0 auto; }
+.gift-free .gift-actions .gift-btn { flex: 1; padding: 12px 8px; }
+.gift-free-hint { font-size: 13px; color: var(--text-light); margin-top: 10px; }
 
 /* MODAL PIX */
 .pix-overlay {
@@ -478,18 +488,10 @@ section { padding: 80px 24px; max-width: 600px; margin: 0 auto; text-align: cent
 .pix-copy.copied { background: var(--olive); }
 .pix-key { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); margin-top: 16px; line-height: 1.8; }
 .pix-key strong { font-family: 'EB Garamond', serif; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--text); font-weight: 500; }
-.pix-card-btn { width: 100%; justify-content: center; }
-.pix-card-btn[disabled] { opacity: .6; cursor: wait; }
-.pay-divider { display: flex; align-items: center; gap: 12px; margin: 22px 0 16px; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--olive); }
-.pay-divider::before, .pay-divider::after { content: ''; flex: 1; height: 1px; background: var(--olive-light); }
-.card-free { text-align: left; margin-bottom: 12px; }
-.card-free label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-dark); display: block; margin-bottom: 6px; }
 .card-free-input { display: flex; align-items: center; border: 1.5px solid var(--blue-light); background: #fff; }
 .card-free-input span { padding: 0 4px 0 14px; font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--text-light); }
 .card-free-input input { flex: 1; min-width: 0; border: none; outline: none; padding: 11px 14px 11px 4px; font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--text); background: transparent; }
 .card-free-input.error { border-color: #c0392b; animation: shake 0.4s ease; }
-.card-note { font-size: 13px; color: var(--text-light); margin-top: 8px; }
-.card-note.error { color: #a93226; }
 
 /* AVISO DE RETORNO DO PAGAMENTO */
 .pay-toast {
@@ -1041,14 +1043,20 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
     <span class="section-label reveal">Lista de Presentes</span>
     <p class="gift-intro reveal">
       Sua presença já é o nosso maior presente.<br>
-      Mas, se desejar nos presentear, escolha um item abaixo e contribua pelo Pix.
+      Mas, se desejar nos presentear, escolha um item abaixo e presenteie pelo Pix ou cartão.
     </p>
+    <p class="gift-pay-note reveal">Pix · Cartão de crédito em até 12x</p>
     <div class="gift-grid" id="giftGrid"></div>
     <div class="gift-subtitle reveal">Vale-presente</div>
     <div class="gift-grid voucher-grid" id="voucherGrid"></div>
     <div class="gift-free reveal">
-      <p>Prefere contribuir com outro valor?<br>Use o Pix abaixo e digite o valor que desejar.</p>
-      <button class="btn-primary" onclick="openPix(null)">Pix com valor livre</button>
+      <p>Prefere contribuir com outro valor?<br>Digite o valor e escolha como pagar.</p>
+      <div class="card-free-input"><span>R$</span><input type="number" id="freeAmount" inputmode="decimal" min="1" max="10000" step="0.01" placeholder="0,00" aria-label="Valor da contribuição"></div>
+      <div class="gift-actions">
+        <button class="gift-btn pix" onclick="payFreePix()"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2 21.8 12 12 21.8 2.2 12z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M8.2 12 12 8.2 15.8 12 12 15.8z"/></svg> Pix</button>
+        <button class="gift-btn" onclick="payFreeCard(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg> Cartão</button>
+      </div>
+      <p class="gift-free-hint">No cartão, valor mínimo de R$ 20,00.</p>
     </div>
   </section>
 
@@ -1185,7 +1193,7 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
 <div class="pix-overlay" id="pixOverlay" onclick="if(event.target===this) closePix()">
   <div class="pix-modal" role="dialog" aria-modal="true" aria-labelledby="pixGiftName">
     <button class="pix-close" onclick="closePix()" aria-label="Fechar">&times;</button>
-    <span class="pix-kicker">Presentear</span>
+    <span class="pix-kicker">Presentear com Pix</span>
     <div class="pix-gift-name" id="pixGiftName"></div>
     <div class="pix-gift-value" id="pixGiftValue"></div>
     <div class="pix-qr" id="pixQr"></div>
@@ -1195,16 +1203,6 @@ footer .footer-date { font-family: 'Cinzel', serif; font-size: 11px; letter-spac
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
       <span>Copiar código Pix</span>
     </button>
-    <div class="pay-divider"><span>ou</span></div>
-    <div class="card-free" id="cardFree" style="display:none;">
-      <label for="cardAmount">Valor para o cartão</label>
-      <div class="card-free-input"><span>R$</span><input type="number" id="cardAmount" inputmode="decimal" min="20" max="10000" step="0.01" placeholder="0,00"></div>
-    </div>
-    <button class="btn-secondary pix-card-btn" id="pixCardBtn" onclick="payWithCard()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
-      <span>Pagar com cartão</span>
-    </button>
-    <p class="card-note" id="cardNote">Crédito em até 12x pelo Mercado Pago</p>
     <p class="pix-key">Chave Pix (e-mail)<br><strong id="pixKeyText"></strong></p>
   </div>
 </div>
@@ -1238,10 +1236,18 @@ var PIX_CITY = "FORTALEZA";       // até 15 caracteres, sem acento
 ─────────────────────────────────────────────────────────────────────*/
 var GIFTS = PRESENTES.gifts;
 var VOUCHERS = PRESENTES.vouchers;
-var currentGift = null;
 
 function brl(v) { return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 function esc(s) { return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+var PIX_ICON = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2 21.8 12 12 21.8 2.2 12z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M8.2 12 12 8.2 15.8 12 12 15.8z"/></svg>';
+var CARD_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>';
+function giftActions(ref) {
+  return '<div class="gift-actions">' +
+    '<button class="gift-btn pix" onclick="openPix(' + ref + ')">' + PIX_ICON + ' Pix</button>' +
+    '<button class="gift-btn" onclick="payWithCard({ id: ' + ref + '.id }, this)">' + CARD_ICON + ' Cartão</button>' +
+  '</div>';
+}
 
 function renderGifts() {
   document.getElementById('giftGrid').innerHTML = GIFTS.map(function(g, i) {
@@ -1249,13 +1255,13 @@ function renderGifts() {
       '<img class="gift-photo" src="assets/presentes/' + g.id + '.jpg" alt="' + esc(g.name) + '">' +
       '<div class="gift-name">' + esc(g.name) + '</div>' +
       '<div class="gift-price">' + brl(g.price) + '</div>' +
-      '<button class="gift-btn" onclick="openPix(GIFTS[' + i + '])">Presentear</button>' +
+      giftActions('GIFTS[' + i + ']') +
     '</div>';
   }).join('');
   document.getElementById('voucherGrid').innerHTML = VOUCHERS.map(function(g, i) {
     return '<div class="gift-card">' +
       '<div class="gift-voucher"><span class="gift-voucher-script">Vale<br>presente</span><span class="gift-voucher-value">R$ ' + g.price + '</span></div>' +
-      '<button class="gift-btn" onclick="openPix(VOUCHERS[' + i + '])">Presentear</button>' +
+      giftActions('VOUCHERS[' + i + ']') +
     '</div>';
   }).join('');
 }
@@ -1288,10 +1294,6 @@ function openPix(gift) {
   document.getElementById('pixKeyText').textContent = PIX_KEY;
   var qr = qrcode(0, 'M'); qr.addData(code); qr.make();
   document.getElementById('pixQr').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
-  currentGift = gift;
-  document.getElementById('cardFree').style.display = gift ? 'none' : 'block';
-  document.getElementById('cardAmount').value = '';
-  setCardState(false, 'Crédito em até 12x pelo Mercado Pago');
   var btn = document.getElementById('pixCopyBtn');
   btn.classList.remove('copied'); btn.querySelector('span').textContent = 'Copiar código Pix';
   document.getElementById('pixOverlay').classList.add('open');
@@ -1299,34 +1301,53 @@ function openPix(gift) {
 function closePix() { document.getElementById('pixOverlay').classList.remove('open'); }
 
 /* ── CARTÃO (Mercado Pago Checkout Pro via /api/checkout) ───────────*/
-function setCardState(loading, note, isError) {
-  var btn = document.getElementById('pixCardBtn'), n = document.getElementById('cardNote');
-  btn.disabled = loading;
-  btn.querySelector('span').textContent = loading ? 'Abrindo Mercado Pago…' : 'Pagar com cartão';
-  n.textContent = note; n.classList.toggle('error', !!isError);
+function showToast(title, msg, ms) {
+  var el = document.createElement('div');
+  el.className = 'pay-toast'; el.setAttribute('role', 'status');
+  el.innerHTML = '<button class="pay-toast-close" aria-label="Fechar">&times;</button><span class="pay-toast-title"></span><span class="pay-toast-msg"></span>';
+  el.querySelector('.pay-toast-title').textContent = title;
+  el.querySelector('.pay-toast-msg').textContent = msg;
+  function hide() { el.classList.remove('show'); setTimeout(function() { el.remove(); }, 400); }
+  el.querySelector('.pay-toast-close').onclick = hide;
+  document.body.appendChild(el);
+  setTimeout(function() { el.classList.add('show'); }, 50);
+  setTimeout(hide, ms || 9000);
 }
-function payWithCard() {
-  var payload;
-  if (currentGift) {
-    payload = { id: currentGift.id };
-  } else {
-    var input = document.getElementById('cardAmount');
-    var amount = parseFloat(String(input.value).replace(',', '.'));
-    if (!(amount >= PRESENTES.free.min && amount <= PRESENTES.free.max)) {
-      var wrap = input.parentNode; wrap.classList.remove('error'); void wrap.offsetWidth; wrap.classList.add('error');
-      setCardState(false, 'Digite um valor entre ' + brl(PRESENTES.free.min) + ' e ' + brl(PRESENTES.free.max) + '.', true);
-      return;
-    }
-    payload = { id: PRESENTES.free.id, amount: amount };
+function payWithCard(payload, btn) {
+  var label = btn.innerHTML;
+  btn.disabled = true; btn.textContent = 'Abrindo…';
+  function fail(msg) {
+    btn.disabled = false; btn.innerHTML = label;
+    showToast('Pagamento com cartão', msg, 7000);
   }
-  setCardState(true, 'Você será levado ao ambiente seguro do Mercado Pago.');
   fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
     .then(function(r) { return r.json().catch(function() { return {}; }).then(function(d) { return { ok: r.ok, data: d }; }); })
     .then(function(res) {
       if (res.ok && res.data.url) { window.location.href = res.data.url; return; }
-      setCardState(false, res.data.error || 'Não foi possível abrir o pagamento. Tente novamente ou use o Pix.', true);
+      fail(res.data.error || 'Não foi possível abrir o pagamento. Tente novamente ou use o Pix.');
     })
-    .catch(function() { setCardState(false, 'Sem conexão com o pagamento. Tente novamente ou use o Pix.', true); });
+    .catch(function() { fail('Sem conexão com o pagamento. Tente novamente ou use o Pix.'); });
+}
+function freeAmount() {
+  var v = parseFloat(String(document.getElementById('freeAmount').value).replace(',', '.'));
+  return v > 0 ? Math.round(v * 100) / 100 : 0;
+}
+function flagFreeAmount() {
+  var w = document.getElementById('freeAmount').parentNode;
+  w.classList.remove('error'); void w.offsetWidth; w.classList.add('error');
+}
+function payFreePix() {
+  var v = freeAmount();
+  openPix(v ? { name: 'Contribuição livre', price: v } : null);
+}
+function payFreeCard(btn) {
+  var v = freeAmount();
+  if (!(v >= PRESENTES.free.min && v <= PRESENTES.free.max)) {
+    flagFreeAmount();
+    showToast('Valor para o cartão', 'Digite um valor entre ' + brl(PRESENTES.free.min) + ' e ' + brl(PRESENTES.free.max) + '.', 6000);
+    return;
+  }
+  payWithCard({ id: PRESENTES.free.id, amount: v }, btn);
 }
 
 /* Aviso ao voltar do Mercado Pago (?pagamento=aprovado|pendente|falhou) */
@@ -1340,16 +1361,7 @@ function payWithCard() {
   };
   var msg = msgs[m[1]]; if (!msg) return;
   if (window.history && history.replaceState) history.replaceState(null, '', window.location.pathname + window.location.hash);
-  var el = document.createElement('div');
-  el.className = 'pay-toast'; el.setAttribute('role', 'status');
-  el.innerHTML = '<button class="pay-toast-close" aria-label="Fechar">&times;</button><span class="pay-toast-title"></span><span class="pay-toast-msg"></span>';
-  el.querySelector('.pay-toast-title').textContent = msg[0];
-  el.querySelector('.pay-toast-msg').textContent = msg[1];
-  function hide() { el.classList.remove('show'); setTimeout(function() { el.remove(); }, 400); }
-  el.querySelector('.pay-toast-close').onclick = hide;
-  document.body.appendChild(el);
-  setTimeout(function() { el.classList.add('show'); }, 50);
-  setTimeout(hide, 9000);
+  showToast(msg[0], msg[1]);
 })();
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePix(); });
 function copyPix() {
